@@ -3,49 +3,41 @@ require_relative 'config/environment'
 class App < Sinatra::Base
   # Write your code here!
   get '/reversename/:name' do
-    @name = params[:name].reverse
-    "#{@name}"
+    @name = params[:name]
+    @name.reverse
   end
-
   get '/square/:number' do
-    @number = params[:number].to_i ** 2
-    "#{@number}"
+    @number = params[:number].to_f
+    "#{@number*@number}"
   end
-
   get '/say/:number/:phrase' do
-    result = ''
-    params[:number].to_i.times do
-      result += params[:phrase]
-    end
-    result
+    @number = params[:number].to_f
+    @phrase = params[:phrase]
+    "#{@phrase * @number}"
   end
-
   get '/say/:word1/:word2/:word3/:word4/:word5' do
-    @first = params[:word1]
-    @second = params[:word2]
-    @third = params[:word3]
-    @fourth = params[:word4]
-    @fifth = params[:word5]
-    "#{@first} "+"#{@second} "+"#{@third} "+"#{@fourth} "+"#{@fifth}."
+    @word1 = params[:word1]
+    @word2 = params[:word2]
+    @word3 = params[:word3]
+    @word4 = params[:word4]
+    @word5 = params[:word5]
+    @word1+@word2+@word3+@word4+@word5
   end
-
   get '/:operation/:number1/:number2' do
-    @operator = params[:operation]
-    @value_1 = params[:number1].to_i
-    @value_2 = params[:number2].to_i
-    if @operator == "add"
-      @result_1 = @value_1 + @value_2
-      "#{@result_1}"
-    elsif @operator == "subtract"
-      @result_2 = @value_1 - @value_2
-      "#{@result_2}"
-    elsif @operator == "multiply"
-      @result_3 = @value_1 * @value_2
-      "#{@result_3}"
-    elsif @operator == "divide"
-      @result_4 = @value_1/@value_2
-      "#{@result_4}"
+    @operation = params[:operation]
+    @number1 = params[:number1].to_f
+    @number2 = params[:number2].to_f
+    case @operation
+      when "add"
+        "#{@number1+@number2}"
+      when "subtract"
+        "#{@number1-@number2}"
+      when "multiply"
+        "#{@number1*@number2}"
+      when "divide"
+        "#{@number1/@number2}"
+      else
+        "Please choose add, subtract, multiply, or divide."
     end
   end
-
 end
